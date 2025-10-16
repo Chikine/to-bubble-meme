@@ -15,6 +15,11 @@
             align-items: center;
             background-color: rgba(0,0,0, 0.8);
         }
+
+        #canvas-container canvas {
+            touch-action: none;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +51,9 @@
         <div id="result-display" class="relative grid place-items-center mt-10">
 
         </div>
+    </div>
+    <div id="credit">
+        web by <a href="https://github.com/Chikine" class=" text-blue-500">Chikine</a>
     </div>
     <script src="./src/main.ts" type="module"></script>
 </body>
