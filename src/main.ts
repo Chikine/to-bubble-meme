@@ -5,17 +5,21 @@ import { MovablePath } from './utils/MovablePath';
 import { CropBox } from './utils/CropBox';
 import LZString from 'lz-string';
 
-const pathname = window.location.pathname
-
-//keeps only the route that has id === pathname
-document.querySelectorAll('.route')?.forEach(elem => elem.id !== pathname && elem.remove())
-
 function navigate(to: string) {
     window.location.href = window.location.origin + to
 }
 
-//pathname = /
-if(pathname === '/') {
+//get search
+const search = Object.fromEntries(window.location.search.slice(1).split('&').map(s => s.split('=')) || [])
+
+//get image id from session storage
+const imageId = search['imageId'] || ''
+
+//no image id => choose image
+if(!imageId) {
+    //remove create page
+    document.getElementById('create')?.remove()
+
     //elements
     const continueButton = document.getElementById('continue-button') as HTMLButtonElement
 
@@ -96,26 +100,19 @@ if(pathname === '/') {
 
             sessionStorage.setItem(sessionLocation, compressed)
 
-            navigate('/create?imageId=' + sessionLocation)
+            navigate('/?imageId=' + sessionLocation)
         }
     })
 }
-
-//pathname = /create
-if(pathname === '/create') {
-    //get search
-    const search = Object.fromEntries(window.location.search.slice(1).split('&').map(s => s.split('=')) || [])
-
-    //get image id from session storage
-    const imageId = search['imageId'] || ''
-
-    //if no image return to /
-    if(!imageId) {
-        navigate('/')
-    }
+//has iamge id
+else {
+    //remove get page
+    document.getElementById('get')?.remove()
 
     //get image src
     const imageSrc = LZString.decompress(sessionStorage.getItem(imageId) || '')
+
+    if(!imageSrc) navigate('/')
 
     //elements
     const backButton = document.getElementById('back-button') as HTMLButtonElement
