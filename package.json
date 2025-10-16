@@ -1,0 +1,23 @@
+{
+  "name": "to-bubble-meme",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && npx @tailwindcss/cli -i ./src/input.css -o ./src/tailwind.css --watch",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^7.1.7"
+  },
+  "dependencies": {
+    "filepond": "^4.32.9",
+    "filepond-plugin-file-encode": "^2.1.14",
+    "filepond-plugin-file-validate-type": "^1.2.9",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.12",
+    "lz-string": "^1.5.0"
+  }
+}
