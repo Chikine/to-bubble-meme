@@ -184,6 +184,8 @@ export class MovablePath {
             this.#tryFocus(point)
 
             this.#onChangeFocusedPoints()
+
+            this.canvas.setPointerCapture(e.pointerId)
         }
 
         this.#updatePointerPosition(clickPosition)
@@ -197,12 +199,16 @@ export class MovablePath {
     }
 
     /**handle pointer up */
-    #handlePointerUp = (_e: PointerEvent) => {
+    #handlePointerUp = (e: PointerEvent) => {
         this.pointer.isDown = false
 
         if(this.target === 'single') this.deselectAll()
 
         this.#updatePointerPosition(null)
+
+        try {
+            this.canvas.releasePointerCapture(e.pointerId)
+        } catch {}
     }
 
     /**update pointer position and update focus point position */

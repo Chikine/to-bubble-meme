@@ -171,7 +171,7 @@ else {
 
         //draw options
         const options = {
-            enableCrop: true,
+            showCrop: true,
             displayPointsAsDots: true,
             fillTopWithBubbleColor: true,
             moveAllPointAtOnce: false,
@@ -276,7 +276,7 @@ else {
             }
 
             //cropbox handle
-            cropBox.enableCrop = options.enableCrop
+            cropBox.enableCrop = options.showCrop
 
             if(!drawImage) {
                 cropBox.draw()

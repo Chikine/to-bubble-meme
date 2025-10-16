@@ -3,8 +3,13 @@ import { Vector } from "./Vector"
 
 /**a crop box that can crop image on canvas */
 export class CropBox {
+    /**canvas that will draw on */
     canvas: HTMLCanvasElement
+
+    /**the {@link canvas} rendering context */
     ctx: CanvasRenderingContext2D
+
+    /**crop move handler */
     movablePath: MovablePath
 
     /**top left */
@@ -33,10 +38,20 @@ export class CropBox {
 
     /**crop options */
     options = {
+        /**the crop / box color */
         boxColor: '#000000',
+
+        /**make outside of the crop area being shadow */
         blurOutside: true,
+
+        /**side length*/
         sideLength: 40,
-        sideWidth: 10
+
+        /**side width*/
+        sideWidth: 10,
+
+        /**show the box or not */
+        showBox: true
     }
 
     constructor(canvas: HTMLCanvasElement, options: Partial<typeof this.options> = {}) {
@@ -82,6 +97,8 @@ export class CropBox {
 
     /**enable modify crop corner */
     set enableCrop(enable: boolean) {
+        this.options.showBox = enable
+
         this.movablePath.setOptions({allowModify: enable})
     }
 
@@ -104,12 +121,15 @@ export class CropBox {
         //lower opacity color
         const color = this.boxColorBlur
 
-        const { sideWidth: width, sideLength: length, blurOutside} = this.options
+        const { sideWidth: width, sideLength: length, blurOutside, showBox} = this.options
 
+        //if not allow to show, return
+        if(!showBox) return
+
+        //create box
         this.ctx.save()
         this.ctx.fillStyle = this.options.boxColor
 
-        //create box
         //corners
         this.ctx.fillRect(this.tl.x, this.tl.y, width, length)
         this.ctx.fillRect(this.tl.x, this.tl.y, length, width)
